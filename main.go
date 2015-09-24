@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 )
 
 type corsHandler struct{}
@@ -36,5 +37,9 @@ func (h *corsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.ListenAndServe(":8080", &corsHandler{})
+	port := ":8080"
+	if s := os.Getenv("PORT"); s != "" {
+		port = s
+	}
+	http.ListenAndServe(port, &corsHandler{})
 }
