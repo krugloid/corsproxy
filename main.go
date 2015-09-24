@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 )
@@ -37,9 +38,9 @@ func (h *corsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := ":8080"
+	port := "8080"
 	if s := os.Getenv("PORT"); s != "" {
 		port = s
 	}
-	http.ListenAndServe(port, &corsHandler{})
+	log.Fatal(http.ListenAndServe(":"+port, &corsHandler{}))
 }
